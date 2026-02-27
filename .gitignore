@@ -1,0 +1,13 @@
+# Terraform internal files
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+
+# Secrets / local configs
+terraform.tfvars
+*.pem
+*.key
+
+# VS Code remote files
+.vscode/
