@@ -46,7 +46,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 	}
 
 	efi_disk {
-	  datastore_id = "local_lvm"
+	  datastore_id = "local-lvm"
 	  file_format = "raw"
 	  type = "4m"
 	}
