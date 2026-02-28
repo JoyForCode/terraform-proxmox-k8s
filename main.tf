@@ -51,11 +51,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 	  file_format = "raw"
 	}
 
-	tpm_state {
-	  datastore_id = "local-lvm"
-	  version = "v2.0"
-	}
-
 	initialization {
 
 	#   user_account {
