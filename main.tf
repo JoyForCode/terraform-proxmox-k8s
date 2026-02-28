@@ -28,7 +28,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
 	bios = "ovmf"
 
-
 	cpu {
 		cores = 2
 		type = "x86-64-v2-AES"
@@ -39,6 +38,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 		floating = 2048
 	}
 
+	machine = "q35"
+
 	disk {
 		datastore_id = "local-lvm"
 		import_from = proxmox_virtual_environment_download_file.latest_ubuntu_24_lts_img.id
@@ -48,7 +49,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 	efi_disk {
 	  datastore_id = "local-lvm"
 	  file_format = "raw"
-	  type = "4m"
 	}
 
 	tpm_state {
