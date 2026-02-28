@@ -13,9 +13,5 @@ provider "vault" {
 provider "proxmox" {
 	endpoint = "https://192.168.1.10:8006/api2/json"
 	insecure = true
-
-		api_token = data.vault_kv_secret_v2.proxmox.data["api_token"]
-		ssh {
-			private_key = data.vault_kv_secret_v2.proxmox.data["ssh_private_key"]
-		}
+	api_token = data.vault_kv_secret_v2.proxmox.data["api_token"]
 }
