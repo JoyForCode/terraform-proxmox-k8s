@@ -17,6 +17,7 @@ provider "proxmox" {
 
 	ssh {
 		agent = false
+		username = data.vault_kv_secret_v2.proxmox.data["user"]
 		private_key = data.vault_kv_secret_v2.proxmox.data["ssh_private_key"]
 	}
 }
