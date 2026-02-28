@@ -12,7 +12,7 @@ timezone: Asia/Kolkata
 network:
   version: 2
   ethernets:
-    eno1:
+    ens18:
       addresses:
         - ${data.vault_kv_secret_v2.k8s_base.data["ipv4_address"]}
       gateway4: ${data.vault_kv_secret_v2.k8s_base.data["gateway"]}
