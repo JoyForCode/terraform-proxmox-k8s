@@ -26,6 +26,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
 	stop_on_destroy = true
 
+	bios = "ovmf"
+
 
 	cpu {
 		cores = 2
@@ -41,6 +43,17 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 		datastore_id = "local-lvm"
 		import_from = proxmox_virtual_environment_download_file.latest_ubuntu_24_lts_img.id
 		interface = "scsi0"
+	}
+
+	efi_disk {
+	  datastore_id = "local_lvm"
+	  file_format = "raw"
+	  type = "4m"
+	}
+
+	tpm_state {
+	  datastore_id = "local-lvm"
+	  version = "v2.0"
 	}
 
 	initialization {
