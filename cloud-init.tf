@@ -1,0 +1,1 @@
+## This file will be used to pass all the necessary configurations for provisioning the VM instead of using the initialization block which has several limitations.
