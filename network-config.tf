@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_file" "network-config" {
+resource "proxmox_virtual_environment_file" "network_config" {
   content_type = "snippets"
   datastore_id = "cloud-init-snippets"
   node_name    = "proxmox"
@@ -13,7 +13,7 @@ ethernets:
     gateway4: ${data.vault_kv_secret_v2.k8s_base.data["gateway"]}
     nameservers:
       addresses: 
-      - ${data.vault_kv_secret_v2.k8s_base.data["dns"]}
+        - ${data.vault_kv_secret_v2.k8s_base.data["dns"]}
 EOF
 
     file_name = "network-config.yaml"
