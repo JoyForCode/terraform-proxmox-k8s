@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   content_type = "snippets"
-  datastore_id = "local"
+  datastore_id = "cloud-init-snippets"
   node_name    = "proxmox"
 
   source_raw {
@@ -14,7 +14,7 @@ network:
   ethernets:
     eno1:
       addresses:
-        - ${data.vault_kv_secret_v2.k8s_base.data["ipv4_address"]}/24
+        - ${data.vault_kv_secret_v2.k8s_base.data["ipv4_address"]}
       gateway4: ${data.vault_kv_secret_v2.k8s_base.data["gateway"]}
       nameservers:
         addresses:
