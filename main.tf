@@ -45,22 +45,24 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
 	initialization {
 
-	  user_account {
-		username = data.vault_kv_secret_v2.k8s_base.data["username"] 
-		password = data.vault_kv_secret_v2.k8s_base.data["password"]
-		keys = [data.vault_kv_secret_v2.k8s_base.data["ssh_public_key"]]
-	  }
+	#   user_account {
+	# 	username = data.vault_kv_secret_v2.k8s_base.data["username"] 
+	# 	password = data.vault_kv_secret_v2.k8s_base.data["password"]
+	# 	keys = [data.vault_kv_secret_v2.k8s_base.data["ssh_public_key"]]
+	#   }
 
-	  dns {
-	    servers = [data.vault_kv_secret_v2.k8s_base.data["dns"]]
-	  }
+	#   dns {
+	#     servers = [data.vault_kv_secret_v2.k8s_base.data["dns"]]
+	#   }
 
-	  ip_config {
-	    ipv4 {
-		address = data.vault_kv_secret_v2.k8s_base.data["ipv4_address"]
-		gateway = data.vault_kv_secret_v2.k8s_base.data["gateway"]
-	    }
-	  }
+	#   ip_config {
+	#     ipv4 {
+	# 	address = data.vault_kv_secret_v2.k8s_base.data["ipv4_address"]
+	# 	gateway = data.vault_kv_secret_v2.k8s_base.data["gateway"]
+	#     }
+	#   }
+
+		user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
 	}
 
 
