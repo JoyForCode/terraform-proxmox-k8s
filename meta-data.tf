@@ -4,7 +4,11 @@ resource "proxmox_virtual_environment_file" "meta_data" {
   node_name    = "proxmox"
 
   source_raw {
-    file_name = "meta-data"
-    data      = "instance-id: k8s-base-node-1\nlocal-hostname: k8s-base-node-1"
+    data = <<-EOF
+    #cloud-config
+    local-hostname: k8s-node-1
+    EOF
+
+    file_name = "meta-data-cloud-config.yaml"
   }
 }
