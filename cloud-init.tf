@@ -13,6 +13,7 @@ users:
   - default
   - name: ${data.vault_kv_secret_v2.k8s_base.data["username"]}
     passwd: ${data.vault_kv_secret_v2.k8s_base.data["password"]}
+    lock_passwd: false
     groups: [sudo]
     shell: /bin/bash
     ssh_authorized_keys:
