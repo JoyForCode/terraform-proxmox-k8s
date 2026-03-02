@@ -56,6 +56,15 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     size = 20
   }
 
+  disk {
+    datastore_id = "local-lvm"
+    file_format = "raw"
+    interface = "scsi1"
+    discard = "on"
+    iothread = true
+    size = 20
+  }
+
   efi_disk {
     datastore_id = "local-lvm"
     file_format  = "raw"
