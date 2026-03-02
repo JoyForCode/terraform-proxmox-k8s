@@ -29,10 +29,10 @@ fs_setup:
   - device: /dev/sdb1
     filesystem: ext4
     overwrite: true
-    label: data
+    label: containerd
 
 mounts:
-  - [ /dev/sdb1, /data, auto, "defaults", "0", "0" ]
+  - [ LABEL=containerd, /var/lib/containerd, ext4, "defaults,nofail,noatime,discard", "0", "2" ]
 
 package_update: true
 packages:
