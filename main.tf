@@ -51,8 +51,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     datastore_id = "local-lvm"
     file_id      = "local:iso/noble-server-cloudimg-amd64.img"
     interface    = "scsi0"
-	discard = "on"
-	iothread = true
+    discard      = "on"
+    iothread     = true
+    size = 20
   }
 
   efi_disk {
@@ -79,7 +80,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     # 	gateway = data.vault_kv_secret_v2.k8s_base.data["gateway"]
     #     }
     #   }
-    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+    user_data_file_id    = proxmox_virtual_environment_file.user_data_cloud_config.id
     network_data_file_id = proxmox_virtual_environment_file.network_config.id
     #meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
