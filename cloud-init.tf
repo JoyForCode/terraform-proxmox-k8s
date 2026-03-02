@@ -25,8 +25,7 @@ packages:
   - net-tools
   
 runcmd:
-  - systemctl enable qemu-guest-agent
-  - systemctl start qemu-guest-agent
+  - [ systemctl, enable, --now, qemu-guest-agent ]
 EOF
 
     file_name = "user_data_cloud_config.yaml"
