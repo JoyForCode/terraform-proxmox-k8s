@@ -19,6 +19,21 @@ users:
     ssh_authorized_keys:
       - ${data.vault_kv_secret_v2.k8s_base.data["ssh_public_key"]}
 
+disk_setup:
+  /dev/sdb:
+    table_type: gpt
+    layout: true
+    overwrite: true
+
+fs_setup:
+  - device: /dev/sdb1
+    filesystem: ext4
+    overwrite: true
+    label: data
+
+mounts:
+  - [ /dev/sdb1, /data, auto, "defaults", "0", "0" ]
+
 package_update: true
 packages:
   - qemu-guest-agent
@@ -31,18 +46,3 @@ EOF
     file_name = "user_data_cloud_config.yaml"
   }
 }
-
-# disk_setup:
-#   /dev/sdb:
-#     table_type: gpt
-#     layout: true
-#     overwrite: true
-
-# fs_setup:
-#   - device: /dev/sdb1
-#     filesystem: ext4
-#     overwrite: true
-#     label: data
-
-# mounts:
-#   - [ /dev/sdb1, /data, auto, "defaults", "0", "0" ]
