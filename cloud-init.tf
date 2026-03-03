@@ -6,7 +6,7 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   source_raw {
     data = <<-EOF
 #cloud-config
-hostname: k8s-node-1
+hostname: ${data.vault_kv_secret_v2.k8s_base.data["hostname"]}
 timezone: Asia/Kolkata
 
 users:
