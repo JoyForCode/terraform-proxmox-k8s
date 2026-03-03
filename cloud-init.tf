@@ -27,7 +27,7 @@ packages:
   - git
 
 ansible: 
-  install_method: pip
+  install_method: distro
   pull:
     - url: "https://github.com/JoyForCode/k8s-ansible-playbooks.git"
   playbook_names: [install_kubeadm.yml]
