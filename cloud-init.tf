@@ -21,6 +21,17 @@ users:
     ssh_authorized_keys:
       - ${each.value.ssh_public_key}
 
+packages:
+  - qemu-guest-agent
+  - net-tools
+  - git
+
+ansible: 
+  install_method: pip
+  pull:
+    - url: "https://github.com/JoyForCode/k8s-ansible-playbooks.git"
+  playbook_names: [install_kubeadm.yml]
+
 disk_setup:
   /dev/sdb:
     table_type: gpt
@@ -37,9 +48,6 @@ mounts:
   - [ LABEL=containerd, /var/lib/containerd, ext4, "defaults,nofail,noatime,discard", "0", "2" ]
 
 package_update: true
-packages:
-  - qemu-guest-agent
-  - net-tools
   
 runcmd:
   - [ systemctl, enable, --now, qemu-guest-agent ]
