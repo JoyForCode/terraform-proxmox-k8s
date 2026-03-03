@@ -27,6 +27,7 @@ packages:
   - git
 
 ansible: 
+  package_name: ansible-core
   install_method: distro
   pull:
     - url: "https://github.com/JoyForCode/k8s-ansible-playbooks.git"
