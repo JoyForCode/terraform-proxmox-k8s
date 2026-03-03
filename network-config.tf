@@ -1,4 +1,6 @@
 resource "proxmox_virtual_environment_file" "network_config" {
+  for_each = local.nodes
+
   content_type = "snippets"
   datastore_id = "cloud-init-snippets"
   node_name    = "proxmox"
@@ -11,13 +13,13 @@ ethernets:
     match:
       driver: virtio_net
     addresses: 
-      - ${data.vault_kv_secret_v2.k8s_base.data["ipv4_address"]}
-    gateway4: ${data.vault_kv_secret_v2.k8s_base.data["gateway"]}
+      - ${each.value.ip_address}
+    gateway4: ${each.value.gateway}
     nameservers:
       addresses: 
-        - ${data.vault_kv_secret_v2.k8s_base.data["dns"]}
+        - ${each.value.dns}
 EOF
 
-    file_name = "network_config.yaml"
+    file_name = "network_config_${each.key}.yaml"
   }
 }
