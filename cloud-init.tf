@@ -1,4 +1,6 @@
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
+  for_each = local.nodes
+
   content_type = "snippets"
   datastore_id = "cloud-init-snippets"
   node_name    = "proxmox"
@@ -6,18 +8,18 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   source_raw {
     data = <<-EOF
 #cloud-config
-hostname: ${data.vault_kv_secret_v2.k8s_base.data["hostname"]}
+hostname: ${each.key}
 timezone: Asia/Kolkata
 
 users:
   - default
-  - name: ${data.vault_kv_secret_v2.k8s_base.data["username"]}
-    passwd: ${data.vault_kv_secret_v2.k8s_base.data["password"]}
+  - name: ${each.value.username}
+    passwd: ${each.value.password}
     lock_passwd: false
     groups: [sudo]
     shell: /bin/bash
     ssh_authorized_keys:
-      - ${data.vault_kv_secret_v2.k8s_base.data["ssh_public_key"]}
+      - ${each.value.ssh_public_key}
 
 disk_setup:
   /dev/sdb:
@@ -43,6 +45,6 @@ runcmd:
   - [ systemctl, enable, --now, qemu-guest-agent ]
 EOF
 
-    file_name = "user_data_cloud_config.yaml"
+    file_name = "user_data_${each.key}.yaml"
   }
 }
