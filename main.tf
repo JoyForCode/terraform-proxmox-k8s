@@ -13,12 +13,14 @@ terraform {
 }
 
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  name        = data.vault_kv_secret_v2.k8s_base.data["hostname"]
+  for_each = local.nodes
+
+  name        = each.key
   description = "Will be used for deployment of K8 cluster"
   tags        = ["terraform", "K8s", "ubuntu_server"]
 
   node_name = "proxmox"
-  vm_id     = data.vault_kv_secret_v2.k8s_base.data["vmid"]
+  vm_id     = each.value.vm_id
 
   stop_on_destroy = true
 
@@ -28,13 +30,13 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   boot_order    = ["scsi0"]
 
   cpu {
-    cores = 2
+    cores = each.value.cores
     type  = "x86-64-v2-AES"
   }
 
   memory {
-    dedicated = 2048
-    floating  = 2048
+    dedicated = each.value.memory_fixed
+    floating  = each.value.memory_floating
   }
 
   serial_device {
@@ -53,7 +55,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     interface    = "scsi0"
     discard      = "on"
     iothread     = true
-    size = 20
+    size = each.value.main_disk_size
   }
 
   disk {
@@ -62,7 +64,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     interface = "scsi1"
     discard = "on"
     iothread = true
-    size = 20
+    size = each.value.data_disk_size
   }
 
   efi_disk {
@@ -89,8 +91,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     # 	gateway = data.vault_kv_secret_v2.k8s_base.data["gateway"]
     #     }
     #   }
-    user_data_file_id    = proxmox_virtual_environment_file.user_data_cloud_config.id
-    network_data_file_id = proxmox_virtual_environment_file.network_config.id
+    user_data_file_id    = proxmox_virtual_environment_file.user_data_cloud_config[each.key].id
+    network_data_file_id = proxmox_virtual_environment_file.network_config[each.key].id
     #meta_data_file_id = proxmox_virtual_environment_file.meta_data_cloud_config.id
   }
 
