@@ -30,7 +30,7 @@ ansible:
   install_method: distro
   pull:
     - url: "https://github.com/JoyForCode/k8s-ansible-playbooks.git"
-    playbook_names: [install_kubeadm.yml]
+      playbook_names: [install_kubeadm.yml]
 
 disk_setup:
   /dev/sdb:
