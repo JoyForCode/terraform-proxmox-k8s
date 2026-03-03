@@ -13,12 +13,12 @@ terraform {
 }
 
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  name        = "k8s-base-node-1"
+  name        = data.vault_kv_secret_v2.k8s_base.data["hostname"]
   description = "Will be used for deployment of K8 cluster"
   tags        = ["terraform", "K8s", "ubuntu_server"]
 
   node_name = "proxmox"
-  vm_id     = 5001
+  vm_id     = data.vault_kv_secret_v2.proxmox.data["vm_id"]
 
   stop_on_destroy = true
 
