@@ -18,7 +18,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   tags        = ["terraform", "K8s", "ubuntu_server"]
 
   node_name = "proxmox"
-  vm_id     = data.vault_kv_secret_v2.proxmox.data["vm_id"]
+  vm_id     = data.vault_kv_secret_v2.proxmox.data["vmid"]
 
   stop_on_destroy = true
 
