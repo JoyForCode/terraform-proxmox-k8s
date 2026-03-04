@@ -21,6 +21,9 @@ users:
     ssh_authorized_keys:
       - ${each.value.ssh_public_key}
 
+package_update: true
+package_upgrade: true
+
 packages:
   - qemu-guest-agent
   - net-tools
@@ -48,8 +51,6 @@ fs_setup:
 mounts:
   - [ LABEL=containerd, /var/lib/containerd, ext4, "defaults,nofail,noatime,discard", "0", "2" ]
 
-package_update: true
-  
 runcmd:
   - [ systemctl, enable, --now, qemu-guest-agent ]
 EOF
