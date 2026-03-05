@@ -32,9 +32,13 @@ packages:
 ansible: 
   package_name: ansible-core
   install_method: distro
+  galaxy:
+    actions:
+      - ["ansible-galaxy", "collection", "install", "ansible.posix"]
+      - ["ansible-galaxy", "collection", "install", "community.general"]
   pull:
     - url: "https://github.com/JoyForCode/k8s-ansible-playbooks.git"
-      playbook_names: [install_kubeadm.yml]
+      playbook_names: [base_setup.yml, setup_containerd.yml, install_kubeadm.yml]
 
 disk_setup:
   /dev/sdb:
